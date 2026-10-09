@@ -33,8 +33,8 @@ include $(PARTITION_ADDRESSES_FILE)
 
 # ESP32 Tools (from PlatformIO packages)
 ESP32_FRAMEWORK_TOOLS = .platformio/packages/framework-arduinoespressif32/tools
-GEN_ESP32PART = python3 $(ESP32_FRAMEWORK_TOOLS)/gen_esp32part.py
-ESPTOOL = python3 .platformio/packages/tool-esptoolpy/esptool.py
+GEN_ESP32PART = $(shell if [ -f $(ESP32_FRAMEWORK_TOOLS)/gen_esp32part.py ]; then echo "python3 $(ESP32_FRAMEWORK_TOOLS)/gen_esp32part.py"; else echo "gen_esp32part.py"; fi)
+ESPTOOL = $(shell if [ -f .platformio/packages/tool-esptoolpy/esptool.py ]; then echo "python3 .platformio/packages/tool-esptoolpy/esptool.py"; else echo "esptool"; fi)
 
 # Directory structure
 SRC_DIR = modules
@@ -97,7 +97,7 @@ $(MESHTASTIC_PATCH_MARKER): $(MESHTASTIC_PATCHES) $(PARTITION_MESHTASTIC) | $(BU
 # Build meshtastic firmware
 $(MESHTASTIC_FW) $(MESHTASTIC_FS): $(MESHTASTIC_PATCH_MARKER)
 	@echo "==> Building Meshtastic firmware..."
-	@cd $(MESHTASTIC_BUILD) && pio run -e $(MESHTASTIC_ENV)
+	@cd $(MESHTASTIC_BUILD) && pio run -e $(MESHTASTIC_ENV) && pio run -e $(MESHTASTIC_ENV) -t buildfs
 	@MESHTASTIC_FW_SRC=$$(find $(MESHTASTIC_FW_DIR) -maxdepth 1 -name 'firmware-*.bin' ! -name '*.factory.bin' ! -name 'littlefs-*.bin' 2>/dev/null | head -1); \
 	if [ -n "$$MESHTASTIC_FW_SRC" ]; then \
 		echo "    Meshtastic firmware built: $$MESHTASTIC_FW_SRC"; \
