@@ -102,3 +102,18 @@ There are three patches:
 ## Alternatives
 - [Launcher](https://github.com/bmorcelli/Launcher): An option for devices with an SD card. May be possible to make it work from flash like `Mesh Loader` does, but I am not sure.
 - [lunarcore](https://github.com/STCisGOOD/lunarcore): Custom firmware to run Meshcore, Meshtastic, and Retuculum.
+
+## Compatibility Matrix & Firmware Revisions
+
+| Board Variant | MeshCore Fork & Revision | Meshtastic Revision | MeshCore Wi-Fi Support | App Compatibility | Build Status | Hardware Validation |
+|---|---|---|---|---|---|---|
+| **Heltec V3** (`heltec_v3`) | OffbandMesh `firmware-base` (`324dd6c5256b0bece6237daa3b2cb6b06510c007`) | Upstream `v2.8.1.8e6a88d` (`8e6a88d06f44cad26f1e8d7cd402939ccacb9b4c`) | Wi-Fi Companion / Observer | MeshCore Companion App & Meshtastic Android App | Verified (Local & CI) | Outstanding |
+| **Heltec V4** (`heltec_v4`) | OffbandMesh `firmware-base` (`324dd6c5256b0bece6237daa3b2cb6b06510c007`) | Upstream `v2.8.1.8e6a88d` (`8e6a88d06f44cad26f1e8d7cd402939ccacb9b4c`) | Wi-Fi Companion / Observer | MeshCore Companion App & Meshtastic Android App | Verified (Local & CI) | Outstanding |
+
+## Wi-Fi Configuration
+
+The OffbandMesh MeshCore fork uses runtime Wi-Fi bootstrapping (`WifiBootstrap`) alongside Bluetooth LE.
+
+- **Secrets Policy**: No Wi-Fi credentials or secrets are hardcoded in source code or committed to tracked files.
+- **Runtime Provisioning**: Wi-Fi credentials (SSID and Password) are configured dynamically via BLE/Companion CLI commands (`set wifi.ssid <SSID>` and `set wifi.pwd <PASSWORD>`).
+- **Optional Wi-Fi**: Wi-Fi remains optional. If no Wi-Fi credentials are provided, the firmware operates in BLE-only mode.

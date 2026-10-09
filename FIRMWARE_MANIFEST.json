@@ -1,0 +1,18 @@
+{
+  "project": "mesh-loader",
+  "generated_at": "2026-10-09T18:00:00Z",
+  "firmware_components": {
+    "meshcore": {
+      "repository_url": "https://github.com/OffbandMesh/meshcore-firmware.git",
+      "branch": "firmware-base",
+      "commit_sha": "324dd6c5256b0bece6237daa3b2cb6b06510c007",
+      "reason": "Latest OffbandMesh firmware fork supporting Wi-Fi Companion / Observer on Heltec V3 and V4"
+    },
+    "meshtastic": {
+      "repository_url": "https://github.com/meshtastic/firmware.git",
+      "tag": "v2.8.1.8e6a88d",
+      "commit_sha": "8e6a88d06f44cad26f1e8d7cd402939ccacb9b4c",
+      "reason": "Newest upstream stable Meshtastic release compatible with custom partition table"
+    }
+  }
+}
