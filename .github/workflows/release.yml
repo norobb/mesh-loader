@@ -22,6 +22,14 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Report firmware revisions and manifest
+        run: |
+          echo "==> Firmware Manifest:"
+          cat FIRMWARE_MANIFEST.json || true
+          echo ""
+          echo "==> Submodule Status:"
+          git submodule status
+
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v22
 
@@ -34,7 +42,7 @@ jobs:
           path: |
             .platformio/packages
             loader/.pio/libdeps
-          key: pio-${{ matrix.variant }}-${{ hashFiles('variants/${{ matrix.variant }}.mk', 'loader/variants/${{ matrix.variant }}/platformio.ini') }}
+          key: pio-${{ matrix.variant }}-${{ hashFiles('variants/${{ matrix.variant }}.mk', 'loader/variants/${{ matrix.variant }}/platformio.ini', 'patches/meshcore/common.patch', 'patches/meshtastic/common.patch', 'FIRMWARE_MANIFEST.json') }}
           restore-keys: |
             pio-${{ matrix.variant }}-
 
